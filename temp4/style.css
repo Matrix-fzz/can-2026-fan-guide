@@ -1,0 +1,321 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+:root {
+    --primary-color: #c00021; /* A strong red */
+    --secondary-color: #1a2a4c; /* A deep blue */
+    --accent-color: #f3f4f6; /* Light grey background */
+    --text-color: #333;
+    --white-color: #ffffff;
+    --border-radius: 12px;
+    --box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background-color: var(--accent-color);
+    color: var(--text-color);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- Navbar --- */
+.navbar {
+    background: var(--white-color);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    gap: 30px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--secondary-color);
+    font-weight: 600;
+    font-size: 1rem;
+    padding-bottom: 5px;
+    position: relative;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* --- Slider --- */
+.slider-container {
+    position: relative;
+    width: 100%;
+    max-height: 550px;
+    overflow: hidden;
+}
+
+.slider {
+    display: flex;
+    transition: transform 0.7s ease-in-out;
+}
+
+.slide {
+    min-width: 100%;
+    position: relative;
+}
+
+.slide img {
+    width: 100%;
+    height: 550px;
+    display: block;
+    object-fit: cover;
+}
+
+.slide-details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    color: var(--white-color);
+    padding: 40px 50px;
+}
+
+.slide-details h3 { font-size: 2.5rem; margin: 0 0 10px; }
+.slide-details p { font-size: 1.2rem; margin: 0; }
+
+.slider-btn {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+    padding: 15px;
+    color: var(--white-color);
+    font-weight: bold;
+    font-size: 20px;
+    transition: background-color 0.3s ease;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+.slider-btn.prev { left: 10px; border-radius: 50%; width: 50px; height: 50px; }
+.slider-btn.next { right: 10px; border-radius: 50%; width: 50px; height: 50px; }
+.slider-btn:hover { background-color: var(--primary-color); }
+
+/* --- Search Section --- */
+#search-section {
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.search-wrapper {
+    background: var(--white-color);
+    padding: 3rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.search-wrapper h2 { font-size: 2.5rem; color: var(--secondary-color); margin-top: 0; }
+.search-wrapper p { margin-bottom: 2rem; font-size: 1.1rem; }
+
+.search-box {
+    display: flex;
+    justify-content: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#search-input {
+    width: 75%;
+    padding: 15px 20px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+    outline: none;
+}
+
+#search-button {
+    padding: 15px 30px;
+    font-size: 1rem;
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    border: none;
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+#search-button:hover { background-color: #a0001c; }
+
+/* --- City Cards Section --- */
+#cities-section {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.city-card {
+    background: var(--white-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-header {
+    position: relative;
+}
+
+.card-header img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+}
+
+.card-header h3 {
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+    color: var(--white-color);
+    font-size: 2rem;
+    margin: 0;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.info-tabs {
+    display: flex;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 1.5rem;
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #888;
+    position: relative;
+}
+
+.tab-btn.active {
+    color: var(--primary-color);
+}
+
+.tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--primary-color);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.info-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1.2rem;
+}
+
+.info-item i {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    margin-right: 15px;
+    margin-top: 5px;
+    width: 20px;
+    text-align: center;
+}
+
+.item-details h5 {
+    margin: 0 0 5px;
+    font-size: 1.1rem;
+    color: var(--secondary-color);
+}
+
+.item-details p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* --- Footer --- */
+footer {
+    text-align: center;
+    padding: 2rem 0;
+    background: var(--secondary-color);
+    color: var(--white-color);
+    margin-top: 2rem;
+}
+
+/* Responsive */
+@media(min-width: 768px) {
+    #cities-section {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .city-card {
+        flex-direction: row;
+    }
+    .card-header {
+        width: 40%;
+    }
+    .card-header img {
+        height: 100%;
+    }
+    .card-body {
+        width: 60%;
+    }
+}
+
+@media(min-width: 1024px) {
+    #cities-section {
+        grid-template-columns: 1fr;
+    }
+}

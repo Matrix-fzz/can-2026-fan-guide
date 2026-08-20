@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAN 2026 - Africa Cup of Nations</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        green: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .slide-fade {
+            transition: opacity 0.5s ease-in-out;
+        }
+        .slider-dots button.active {
+            background-color: white;
+        }
+        .search-error {
+            opacity: 0;
+            height: 0;
+            transition: all 0.3s ease;
+        }
+        .search-error.show {
+            opacity: 1;
+            height: 24px;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-gradient-to-r from-green-700 to-green-900 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="bg-yellow-400 w-10 h-10 rounded-full flex items-center justify-center">
+                    <span class="font-bold text-green-900">C</span>
+                </div>
+                <span class="text-xl font-bold">CAN 2026</span>
+            </div>
+            
+            <div class="hidden md:flex space-x-8">
+                <a href="#" class="hover:text-yellow-300 transition">Home</a>
+                <a href="#" class="hover:text-yellow-300 transition">Matches</a>
+                <a href="#" class="hover:text-yellow-300 transition">Teams</a>
+                <a href="#" class="hover:text-yellow-300 transition">Venues</a>
+                <a href="#" class="hover:text-yellow-300 transition">Tickets</a>
+            </div>
+            
+            <button class="md:hidden">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-r from-green-800 to-yellow-600 text-white py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">Africa Cup of Nations 2026</h1>
+            <p class="text-xl md:text-2xl mb-8">Morocco • January 2026</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button class="bg-yellow-500 hover:bg-yellow-600 text-green-900 font-bold py-3 px-8 rounded-full transition">
+                    Buy Tickets
+                </button>
+                <button class="bg-transparent border-2 border-white hover:bg-white/10 font-bold py-3 px-8 rounded-full transition">
+                    Match Schedule
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Match Slider -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Upcoming Matches</h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="relative overflow-hidden rounded-xl shadow-xl">
+                    <div id="match-slider" class="relative h-96 md:h-[500px]">
+                        <!-- Slides will be inserted here by JS -->
+                    </div>
+                    
+                    <!-- Slider Controls -->
+                    <div id="slider-dots" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                        <!-- Dots will be inserted here by JS -->
+                    </div>
+                    
+                    <!-- Navigation Arrows -->
+                    <button id="prev-btn" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full" aria-label="Previous match">
+                        <i class="fas fa-chevron-left text-xl"></i>
+                    </button>
+                    <button id="next-btn" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full" aria-label="Next match">
+                        <i class="fas fa-chevron-right text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Find Accommodation & Services</h2>
+                <p class="text-gray-600">
+                    Search for hotels, restaurants, and transportation options in host cities
+                </p>
+            </div>
+            
+            <div class="max-w-2xl mx-auto">
+                <form id="search-form" class="relative">
+                    <div class="flex">
+                        <div class="relative flex-grow">
+                            <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            <input
+                                type="text"
+                                id="search-input"
+                                placeholder="Enter city name (e.g., Casablanca, Tangier)"
+                                class="w-full pl-12 pr-4 py-4 rounded-l-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            />
+                        </div>
+                        <button 
+                            type="submit"
+                            class="bg-green-700 hover:bg-green-800 text-white px-6 py-4 rounded-r-lg font-medium transition"
+                        >
+                            Search
+                        </button>
+                    </div>
+                    
+                    <div id="search-error" class="mt-2 text-red-600 text-sm search-error">
+                        City not found. Please select a host city: Casablanca, Tangier, Rabat, Marrakech, Agadir
+                    </div>
+                </form>
+                
+                <!-- City Buttons -->
+                <div id="city-buttons" class="mt-6 flex flex-wrap justify-center gap-2">
+                    <!-- City buttons will be inserted here by JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 id="services-title" class="text-3xl font-bold text-gray-800 mb-2">Services in Casablanca</h2>
+                <p class="text-gray-600">Find everything you need for your CAN 2026 experience</p>
+            </div>
+            
+            <div id="services-container" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Services will be inserted here by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="bg-yellow-400 w-8 h-8 rounded-full flex items-center justify-center">
+                            <span class="font-bold text-green-900 text-sm">C</span>
+                        </div>
+                        <span class="text-xl font-bold">CAN 2026</span>
+                    </div>
+                    <p class="text-gray-400">
+                        Official website for the 2026 Africa Cup of Nations in Morocco
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">Matches</a></li>
+                        <li><a href="#" class="hover:text-white transition">Teams</a></li>
+                        <li><a href="#" class="hover:text-white transition">Venues</a></li>
+                        <li><a href="#" class="hover:text-white transition">Tickets</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Host Cities</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="hover:text-white transition cursor-pointer">Casablanca</li>
+                        <li class="hover:text-white transition cursor-pointer">Tangier</li>
+                        <li class="hover:text-white transition cursor-pointer">Rabat</li>
+                        <li class="hover:text-white transition cursor-pointer">Marrakech</li>
+                        <li class="hover:text-white transition cursor-pointer">Agadir</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Contact</h3>
+                    <address class="not-italic text-gray-400">
+                        <p>CAN 2026 Organizing Committee</p>
+                        <p>Rabat, Morocco</p>
+                        <p class="mt-2">info@can2026.ma</p>
+                    </address>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center text-gray-400">
+                <p>© 2025 CAN 2026. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mock data for matches
+        const matches = [
+            {
+                id: 1,
+                teams: 'Senegal vs Nigeria',
+                date: 'Jan 12, 2026',
+                time: '20:00 GMT',
+                stadium: 'Stade Mohammed V',
+                city: 'Casablanca',
+                country: 'Morocco',
+                image: 'https://placehold.co/800x400/1a3a6c/ffffff?text=Senegal+vs+Nigeria'
+            },
+            {
+                id: 2,
+                teams: 'Egypt vs Ghana',
+                date: 'Jan 14, 2026',
+                time: '17:00 GMT',
+                stadium: 'Stade Ibn Batouta',
+                city: 'Tangier',
+                country: 'Morocco',
+                image: 'https://placehold.co/800x400/2a5b3c/ffffff?text=Egypt+vs+Ghana'
+            },
+            {
+                id: 3,
+                teams: 'Cameroon vs Morocco',
+                date: 'Jan 16, 2026',
+                time: '20:00 GMT',
+                stadium: 'Grand Stade de Casablanca',
+                city: 'Casablanca',
+                country: 'Morocco',
+                image: 'https://placehold.co/800x400/8b2e2e/ffffff?text=Cameroon+vs+Morocco'
+            }
+        ];
+
+        // Mock data for services
+        const servicesData = {
+            Casablanca: {
+                hotels: [
+                    { name: 'Hotel Farah', rating: 4.5, price: '$$$' },
+                    { name: 'Kenzi Tower Hotel', rating: 4.7, price: '$$$$' },
+                    { name: 'Hyatt Regency Casablanca', rating: 4.6, price: '$$$$' }
+                ],
+                restaurants: [
+                    { name: 'Rick\'s Café', cuisine: 'Moroccan', rating: 4.4 },
+                    { name: 'Le Cabestan', cuisine: 'Seafood', rating: 4.6 },
+                    { name: 'La Sqala', cuisine: 'Traditional', rating: 4.3 }
+                ],
+                transport: [
+                    { type: 'Tram', routes: 'Lines 1 & 2' },
+                    { type: 'Taxi', info: 'Petit & Grand Taxis' },
+                    { type: 'Airport Bus', route: 'Casablanca Airport - City Center' }
+                ]
+            },
+            Tangier: {
+                hotels: [
+                    { name: 'El Minzah Hotel', rating: 4.4, price: '$$$' },
+                    { name: 'Mövenpick Hotel Tangier', rating: 4.5, price: '$$$' },
+                    { name: 'Hotel Atlas Rif', rating: 4.2, price: '$$' }
+                ],
+                restaurants: [
+                    { name: 'El Morocco Club', cuisine: 'Mediterranean', rating: 4.5 },
+                    { name: 'Restaurant Populaire', cuisine: 'Local', rating: 4.3 },
+                    { name: 'Café Hafa', cuisine: 'Café', rating: 4.7 }
+                ],
+                transport: [
+                    { type: 'Grand Taxis', info: 'Shared taxis to city center' },
+                    { type: 'Train', route: 'Tangier - Casablanca' },
+                    { type: 'Ferry', route: 'To Spain (Tarifa/Algeciras)' }
+                ]
+            },
+            Rabat: {
+                hotels: [
+                    { name: 'Sofitel Rabat Jardin des Roses', rating: 4.6, price: '$$$$' },
+                    { name: 'Riad Kalaa', rating: 4.7, price: '$$$' },
+                    { name: 'Hotel des Oudaias', rating: 4.3, price: '$$' }
+                ],
+                restaurants: [
+                    { name: 'Dar Naji', cuisine: 'Moroccan', rating: 4.4 },
+                    { name: 'Le Dhow', cuisine: 'Seafood', rating: 4.5 },
+                    { name: 'Restaurant Dinarjat', cuisine: 'Traditional', rating: 4.2 }
+                ],
+                transport: [
+                    { type: 'Train', route: 'Rabat - Casablanca - Marrakech' },
+                    { type: 'Tram', info: 'Lines 1 & 2' },
+                    { type: 'Bus', routes: 'City center routes 1-10' }
+                ]
+            },
+            Marrakech: {
+                hotels: [
+                    { name: 'La Mamounia', rating: 4.9, price: '$$$$$' },
+                    { name: 'Royal Mansour', rating: 4.8, price: '$$$$$' },
+                    { name: 'Riad Yasmine', rating: 4.6, price: '$$$' }
+                ],
+                restaurants: [
+                    { name: 'Nomad', cuisine: 'Modern Moroccan', rating: 4.5 },
+                    { name: 'Le Jardin', cuisine: 'Mediterranean', rating: 4.4 },
+                    { name: 'Al Fassia', cuisine: 'Traditional', rating: 4.7 }
+                ],
+                transport: [
+                    { type: 'Petit Taxis', info: 'Blue city taxis' },
+                    { type: 'Bus', routes: 'Lines 1, 11, 16, 19' },
+                    { type: 'Horse Carriage', info: 'Traditional calèche' }
+                ]
+            },
+            Agadir: {
+                hotels: [
+                    { name: 'Sofitel Agadir Royal Bay', rating: 4.7, price: '$$$$' },
+                    { name: 'Hyatt Place Taghazout Bay', rating: 4.6, price: '$$$' },
+                    { name: 'Riad Villa Blanche', rating: 4.8, price: '$$$$' }
+                ],
+                restaurants: [
+                    { name: 'La Sqala', cuisine: 'Seafood', rating: 4.5 },
+                    { name: 'Ocean', cuisine: 'International', rating: 4.3 },
+                    { name: 'Restaurant Dar Naji', cuisine: 'Moroccan', rating: 4.4 }
+                ],
+                transport: [
+                    { type: 'Petit Taxis', info: 'Blue city taxis' },
+                    { type: 'Grand Taxis', route: 'To Casablanca/Marrakech' },
+                    { type: 'Bus', routes: 'City center routes A, B, C' }
+                ]
+            }
+        };
+
+        // Host cities array
+        const hostCities = ['Casablanca', 'Tangier', 'Rabat', 'Marrakech', 'Agadir'];
+
+        // State variables
+        let currentSlide = 0;
+        let selectedCity = 'Casablanca';
+        let sliderInterval;
+
+        // DOM Elements
+        const matchSlider = document.getElementById('match-slider');
+        const sliderDots = document.getElementById('slider-dots');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const searchForm = document.getElementById('search-form');
+        const searchInput = document.getElementById('search-input');
+        const searchError = document.getElementById('search-error');
+        const cityButtons = document.getElementById('city-buttons');
+        const servicesTitle = document.getElementById('services-title');
+        const servicesContainer = document.getElementById('services-container');
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMatchSlider();
+            renderSliderDots();
+            renderCityButtons();
+            renderServices();
+            startAutoSlide();
+            
+            // Event listeners
+            prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
+            nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
+            searchForm.addEventListener('submit', handleSearch);
+        });
+
+        // Render match slider
+        function renderMatchSlider() {
+            const match = matches[currentSlide];
+            matchSlider.innerHTML = `
+                <img 
+                    src="${match.image}" 
+                    alt="${match.teams}"
+                    class="w-full h-full object-cover"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                
+                <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-end">
+                        <div>
+                            <h3 class="text-2xl md:text-3xl font-bold mb-2">${match.teams}</h3>
+                            <div class="flex flex-wrap gap-4 text-sm md:text-base">
+                                <span class="flex items-center">
+                                    <i class="far fa-calendar-alt mr-1"></i>
+                                    ${match.date}
+                                </span>
+                                <span class="flex items-center">
+                                    <i class="far fa-clock mr-1"></i>
+                                    ${match.time}
+                                </span>
+                                <span class="flex items-center">
+                                    <i class="fas fa-map-marker-alt mr-1"></i>
+                                    ${match.stadium}, ${match.city}
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 md:mt-0 bg-green-700 px-4 py-2 rounded-full">
+                            ${match.country}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render slider dots
+        function renderSliderDots() {
+            sliderDots.innerHTML = '';
+            matches.forEach((_, index) => {
+                const dot = document.createElement('button');
+                dot.className = `w-3 h-3 rounded-full ${index === currentSlide ? 'bg-white' : 'bg-white/50'}`;
+                dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
+                dot.addEventListener('click', () => goToSlide(index));
+                sliderDots.appendChild(dot);
+            });
+        }
+
+        // Render city buttons
+        function renderCityButtons() {
+            cityButtons.innerHTML = '';
+            hostCities.forEach(city => {
+                const button = document.createElement('button');
+                button.className = `px-4 py-2 rounded-full text-sm font-medium transition ${
+                    city === selectedCity 
+                        ? 'bg-green-700 text-white' 
+                        : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
+                }`;
+                button.textContent = city;
+                button.addEventListener('click', () => selectCity(city));
+                cityButtons.appendChild(button);
+            });
+        }
+
+        // Render services section
+        function renderServices() {
+            servicesTitle.textContent = `Services in ${selectedCity}`;
+            
+            const services = servicesData[selectedCity];
+            servicesContainer.innerHTML = `
+                <div class="bg-gray-50 rounded-xl p-6 shadow-md">
+                    <div class="flex items-center mb-6">
+                        <i class="fas fa-hotel text-green-700 text-xl mr-3"></i>
+                        <h3 class="text-xl font-bold text-gray-800">Hotels</h3>
+                    </div>
+                    <div class="space-y-4">
+                        ${services.hotels.map(hotel => `
+                            <div class="border-b border-gray-200 pb-4 last:border-0 last:pb-0">
+                                <div class="font-medium text-gray-800">${hotel.name}</div>
+                                <div class="flex items-center mt-1">
+                                    <span class="text-yellow-500 mr-2">★</span>
+                                    <span class="text-gray-600">${hotel.rating}</span>
+                                    <span class="ml-4 text-gray-500">${hotel.price}</span>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 rounded-xl p-6 shadow-md">
+                    <div class="flex items-center mb-6">
+                        <i class="fas fa-utensils text-green-700 text-xl mr-3"></i>
+                        <h3 class="text-xl font-bold text-gray-800">Restaurants</h3>
+                    </div>
+                    <div class="space-y-4">
+                        ${services.restaurants.map(restaurant => `
+                            <div class="border-b border-gray-200 pb-4 last:border-0 last:pb-0">
+                                <div class="font-medium text-gray-800">${restaurant.name}</div>
+                                <div class="text-gray-600 text-sm">${restaurant.cuisine} • ${restaurant.rating} ★</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 rounded-xl p-6 shadow-md">
+                    <div class="flex items-center mb-6">
+                        <i class="fas fa-bus text-green-700 text-xl mr-3"></i>
+                        <h3 class="text-xl font-bold text-gray-800">Transportation</h3>
+                    </div>
+                    <div class="space-y-4">
+                        ${services.transport.map(transport => `
+                            <div class="border-b border-gray-200 pb-4 last:border-0 last:pb-0">
+                                <div class="font-medium text-gray-800">${transport.type}</div>
+                                <div class="text-gray-600 text-sm">
+                                    ${transport.info || transport.route}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Navigation functions
+        function goToSlide(index) {
+            currentSlide = (index + matches.length) % matches.length;
+            renderMatchSlider();
+            renderSliderDots();
+        }
+
+        function startAutoSlide() {
+            sliderInterval = setInterval(() => {
+                goToSlide(currentSlide + 1);
+            }, 5000);
+        }
+
+        // Search and city selection
+        function handleSearch(e) {
+            e.preventDefault();
+            const query = searchInput.value.trim();
+            
+            if (hostCities.includes(query)) {
+                selectCity(query);
+                searchError.classList.remove('show');
+            } else {
+                searchError.classList.add('show');
+                setTimeout(() => {
+                    searchError.classList.remove('show');
+                }, 3000);
+            }
+        }
+
+        function selectCity(city) {
+            selectedCity = city;
+            searchInput.value = city;
+            renderCityButtons();
+            renderServices();
+        }
+    </script>
+</body>
+</html>
+
